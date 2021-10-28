@@ -18,10 +18,10 @@ body {
     height : 200px;
 }
 
-#Left, #Speed {
+#Left, #S {
 float: left;
 }
 
-#Right, #Volume {
+#Right, #V {
 float: right;
 }
