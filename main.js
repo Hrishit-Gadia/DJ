@@ -11,7 +11,7 @@ function preload() {
 }
 
 function setup() {
-    Canvas = createCanvas(400, 350);
+    Canvas = createCanvas(750, 500);
     Canvas.center();
     Video = createCapture(VIDEO);
     Video.hide();
@@ -20,26 +20,42 @@ function setup() {
 }
 
 function draw() {
-    image(Video, 0, 0, 400, 350);
+    image(Video, 0, 0, 750, 500);
     fill("red");
     stroke("red");
+
     if (ScoreLeft > 0.2) {
         circle(LwX, LwY, 20);
-
         var Left01 = Number(LwY);
         var Left02 = floor(Left01);
-        var Left03 = Left02 / 350;
+        var Left03 = Left02 / 500;
         document.getElementById("V").innerHTML = "Volume : " + Left03;
         Sound.setVolume(Left03);
     }
 
     if (ScoreRight > 0.2) {
-    circle(RwX, RwY, 20);
-    var Right01 = Number(RwY);
-    var Right02 = floor(Right01);
-    var Right03 = Right02 / 350;
-    document.getElementById("V").innerHTML = "Speed : " + Right03;
-    Sound.rate(Right03);
+        circle(RwX, RwY, 20);
+        if (RwY > 0 && RwY <= 100) {
+            Sound.rate(0.5);
+            document.getElementById("S").innerHTML = "Speed : " + "0.5";
+        }
+        else if (RwY > 100 && RwY <= 200) {
+            Sound.rate(1);
+            document.getElementById("S").innerHTML = "Speed : " + "1";
+        }
+        else if (RwY > 200 && RwY <= 300) {
+            Sound.rate(1.5);
+            document.getElementById("S").innerHTML = "Speed : " + "1.5";
+        }
+        else if (RwY > 300 && RwY <= 400) {
+            Sound.rate(2);
+            document.getElementById("S").innerHTML = "Speed : " + "2";
+        }
+        else if (RwY > 400 && RwY <= 500) {
+            Sound.rate(2.5);
+            document.getElementById("S").innerHTML = "Speed : " + "2.5";
+        }
+
     }
 
 }
@@ -62,6 +78,7 @@ function Result(Report) {
         LwY = Report[0].pose.leftWrist.y;
         LwX = Report[0].pose.leftWrist.x;
         ScoreLeft = Report[0].pose.keypoints[9].score;
+        ScoreRight = Report[0].pose.keypoints[10].score;
         console.warn(ScoreLeft);
         console.info(RwY, RwX, LwY, LwX);
     }
